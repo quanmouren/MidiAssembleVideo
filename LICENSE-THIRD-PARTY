@@ -1,0 +1,33 @@
+本项目使用了以下开源组件：
+- [mido]
+  版权所有 © [Ole Martin Bjørndalen]
+  遵循 MIT 许可证发布
+  完整许可证文本见：[licenses\mido\LICENSE]
+- [flask]
+  版权所有 © [Pallets]
+  遵循 BSD-3-Clause 许可证发布
+  完整许可证文本见：[licenses\flask\LICENSE.txt]
+- [flask-cors]
+  版权所有 © [Cory Dolphin]
+  遵循 MIT 许可证发布
+  完整许可证文本见：[licenses\flask-cors\LICENSE.txt]
+- [piano-sound-samples]
+  版权所有 © [Liam Lee]
+  遵循 MIT 许可证发布
+  完整许可证文本见：[licenses\piano-sound-samples\LICENSE.txt]
+- [tailwindcss]
+  版权所有 © [Tailwind Labs Inc.]
+  遵循 MIT 许可证发布
+  完整许可证文本见：[licenses\tailwindcss\LICENSE]
+- [moviepy]
+  版权所有 © [Zulko]
+  遵循 MIT 许可证发布
+  完整许可证文本见：[licenses\moviepy\LICENCE.txt]
+- [librosa]
+  版权所有 © [librosa development team]
+  遵循 ISC 许可证发布
+  完整许可证文本见：[licenses\librosa\LICENSE.md]
+- [soundfile]
+  版权所有 © [Bastian Bechtold]
+  遵循 BSD-3-Clause 许可证发布
+  完整许可证文本见：[licenses\soundfile\LICENSE.txt]
