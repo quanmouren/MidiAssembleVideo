@@ -1,6 +1,6 @@
-from libs.parse_midi import parse_midi_notes
-from libs.VideoRendering import VideoRendering
-from libs.sounds_Inspection import runwebserver
+from src.parse_midi import parse_midi_notes
+from src.VideoRendering import VideoRendering
+from src.sounds_Inspection import runwebserver
 if __name__ == "__main__":
     midi_file_path = "test/input_test.mid"
     notes = parse_midi_notes(midi_file_path)

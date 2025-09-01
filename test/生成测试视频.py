@@ -76,7 +76,6 @@ def process_audio_folder(input_folder, output_folder, video_size=(320, 240)):
     print(f"找到 {len(audio_files)} 个音频文件，开始生成视频...")
     for audio_file in audio_files:
         audio_path = os.path.join(input_folder, audio_file)
-        # 保持文件名，将扩展名改为.mp4
         video_filename = os.path.splitext(audio_file)[0] + '.mp4'
         video_path = os.path.join(output_folder, video_filename)
         
