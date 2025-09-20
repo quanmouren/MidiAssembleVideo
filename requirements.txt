@@ -4,3 +4,4 @@ pip install -U flask-cors #MIT license - https://github.com/corydolphin/flask-co
 pip install moviepy #MIT license - https://github.com/Zulko/moviepy
 pip install librosa #ISC license - https://github.com/librosa/librosa
 pip install soundfile #BSD-3-Clause license - https://github.com/bastibe/python-soundfile
+pip install sv-ttk #MIT license - https://github.com/rdbende/Sun-Valley-ttk-theme
