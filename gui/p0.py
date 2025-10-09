@@ -1,6 +1,10 @@
 from tkinter import ttk
 import tkinter as tk
-
+import sys
+sys.path.append('gui')
+sys.path.append('src')
+from Tlog import TLog
+log = TLog("界面p1")
 class P0Frame(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
