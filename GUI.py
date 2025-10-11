@@ -26,11 +26,6 @@ class MainApp(ttk.Frame):
         self.p1_frame = P1Frame(self.notebook)
         self.notebook.add(self.p1_frame, text="测试界面")
         
-        # 可以添加更多界面...
-        self.other_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.other_frame, text="其他界面")
-        ttk.Label(self.other_frame, text="这是另一个界面").pack(padx=20, pady=20)
-
 
 if __name__ == "__main__":
     root = tk.Tk()
