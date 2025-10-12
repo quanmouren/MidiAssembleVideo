@@ -30,8 +30,6 @@ class VideoPreviewGenerator:
         self.canvas_height = canvas_height
         self.output_size = output_size
         self.chord_size_ratio = chord_size_ratio
-        
-        # 创建预览画布
         self.canvas = tk.Canvas(
             parent, 
             width=self.canvas_width, 
@@ -40,36 +38,26 @@ class VideoPreviewGenerator:
             highlightthickness=1,
             highlightbackground="gray"
         )
-        
-        # 计算布局
         self.calculate_layout()
-        # 绘制预览布局
         self.draw_preview()
     
     def calculate_layout(self):
         """计算布局尺寸和位置"""
         output_width, output_height = self.output_size
-        
-        # 计算和弦视频尺寸
         self.chord_width = int(output_width * self.chord_size_ratio)
         self.chord_height = int(output_height * self.chord_size_ratio)
-        
-        # 计算和弦视频位置
+
         self.corner_positions = [
             (0, 0),  # 左上角
             (output_width - self.chord_width, 0),  # 右上角
             (0, output_height - self.chord_height),  # 左下角
             (output_width - self.chord_width, output_height - self.chord_height)  # 右下角
         ]
-        
-        # 计算缩放比例
         self.scale_x = self.canvas_width / self.output_size[0]
         self.scale_y = self.canvas_height / self.output_size[1]
         self.scale = min(self.scale_x, self.scale_y) 
-        # 计算在画布上的实际显示尺寸
         self.display_width = int(self.output_size[0] * self.scale)
         self.display_height = int(self.output_size[1] * self.scale)
-        # 计算偏移量以居中显示
         self.offset_x = (self.canvas_width - self.display_width) // 2
         self.offset_y = (self.canvas_height - self.display_height) // 2
     
@@ -83,7 +71,6 @@ class VideoPreviewGenerator:
     
     def draw_preview(self):
         """绘制预览布局"""
-        # 清除画布
         self.canvas.delete("all")
         
         bg_x1, bg_y1, bg_width, bg_height = self.scale_coordinates(0, 0, self.output_size[0], self.output_size[1])
@@ -161,7 +148,7 @@ class P1Frame(ttk.Frame):
         def 模块test():
             选中的选项 = self.选择和弦方式.get()
             print("选中的选项:", 选中的选项)
-            # 根据选择的和弦方式显示或隐藏预览
+            # 根据和弦方式显示或隐藏预览
             self.update_preview_visibility()
         
         def 选择midi文件():
@@ -182,36 +169,30 @@ class P1Frame(ttk.Frame):
                 self.音符片段_输入框.delete(0, tk.END)
                 self.音符片段_输入框.insert(0, folder_path)
                 
-                # 获取文件夹中的视频文件
                 video_files = self.get_video_files(folder_path)
                 if video_files:
-                    # 随机选择一个视频文件并获取其分辨率
                     selected_video = random.choice(video_files)
                     resolution = self.get_video_resolution(selected_video)
-                    
                     if resolution:
-                        # 调整分辨率大小（缩小）
                         scaled_resolution = (
                             int(resolution[0] * self.scale_factor),
                             int(resolution[1] * self.scale_factor)
                         )
                         log.INFO(f"随机选择视频: {selected_video}, 原始分辨率: {resolution}, 调整后: {scaled_resolution}")
                         
-                        # 更新预览分辨率
                         if self.preview:
                             self.preview.update_parameters(output_size=scaled_resolution)
                         else:
                             # 如果预览还未创建，先创建再更新
                             self.create_preview(scaled_resolution)
                     else:
-                        log.WARNING(f"无法获取视频 {selected_video} 的分辨率，使用默认值")
+                        log.ERROR(f"无法获取视频 {selected_video} 的分辨率，使用默认值")
                 else:
-                    log.WARNING(f"所选文件夹 {folder_path} 中未找到视频文件，使用默认分辨率")
+                    log.ERROR(f"所选文件夹 {folder_path} 中未找到视频文件，使用默认分辨率")
             
             log.INFO(f"音符片段文件夹: {folder_path}")
         def 生成视频_1():
             log.INFO(f"生成视频_1")
-            # 获取延音时长，和弦占比，开始与结束时间
             sustained = float(self.延音时长_输入框.get()) if self.延音时长_输入框.get().strip() else 0.3
             log.DEBUG(f"延音时长: {sustained}")
             chord_size_ratio = float(self.和弦占比_输入框.get()) if self.和弦占比_输入框.get().strip() else 0.4
@@ -251,8 +232,6 @@ class P1Frame(ttk.Frame):
             self.preview = VideoPreview(self, resolution)
             self.preview.grid(row=0, column=1, rowspan=2, padx=(10, 10), pady=(10, 10), sticky="nsew")
         
-
-        
         def on_chord_ratio_change(event=None):
             """和弦占比变化时更新预览"""
             if self.preview and self.选择和弦方式.get() == "四角和弦":
@@ -264,11 +243,9 @@ class P1Frame(ttk.Frame):
                 except ValueError:
                     pass  # 输入非数字时忽略
         
-        # 左侧框架区域
         left_frame = ttk.Frame(self)
         left_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="nsew")
         
-        # 基础设置Frame
         self.基础设置Frame = ttk.LabelFrame(left_frame, text="设置", padding=(1, 1))
         self.基础设置Frame.pack(fill="x", padx=(10, 10), pady=(10, 10))
         
@@ -293,18 +270,15 @@ class P1Frame(ttk.Frame):
         self.选择音符片段文件夹按钮 = ttk.Button(self.基础设置Frame, text="选择文件夹", command=选择音符片段文件夹)
         self.选择音符片段文件夹按钮.grid(row=2, column=3, padx=5, pady=5, sticky="w")
         
-        # 生成设置Frame
         self.生成设置Frame = ttk.LabelFrame(left_frame, text="生成", padding=(1, 1))
         self.生成设置Frame.pack(fill="x", padx=(10, 10), pady=(10, 10))
         
-        # 两个tab
         self.生成设置TabControl = ttk.Notebook(self.生成设置Frame)
         self.生成设置TabControl.pack(fill="x", padx=(10, 10), pady=(10, 10))
         
         self.生成设置Tab1 = ttk.Frame(self.生成设置TabControl)
         self.生成设置TabControl.add(self.生成设置Tab1, text="基本")
         
-        # 添加延音时长和和弦占比（保持grid不变）
         self.延音时长_标签 = ttk.Label(self.生成设置Tab1, text="延音时长：")
         self.延音时长_标签.grid(row=0, column=0, padx=5, pady=5, sticky="w")
         self.延音时长_输入框 = ttk.Entry(self.生成设置Tab1)
@@ -315,14 +289,13 @@ class P1Frame(ttk.Frame):
         self.和弦占比_输入框 = ttk.Entry(self.生成设置Tab1)
         self.和弦占比_输入框.grid(row=1, column=1, padx=5, pady=5, sticky="w")
         self.和弦占比_输入框.insert(0, "0.4")  # 设置默认值
-        # 绑定和弦占比输入框事件
+
         self.和弦占比_输入框.bind("<FocusOut>", on_chord_ratio_change)
         self.和弦占比_输入框.bind("<Return>", on_chord_ratio_change)
         
         self.生成设置Tab2 = ttk.Frame(self.生成设置TabControl)
         self.生成设置TabControl.add(self.生成设置Tab2, text="高级")
         
-        # 添加开始渲染时间和结束渲染时间
         self.开始渲染时间_标签 = ttk.Label(self.生成设置Tab2, text="开始渲染时间：")
         self.开始渲染时间_标签.grid(row=0, column=0, padx=5, pady=5, sticky="w")
         self.开始渲染时间_输入框 = ttk.Entry(self.生成设置Tab2)
@@ -333,17 +306,13 @@ class P1Frame(ttk.Frame):
         self.结束渲染时间_输入框 = ttk.Entry(self.生成设置Tab2)
         self.结束渲染时间_输入框.grid(row=1, column=1, padx=5, pady=5, sticky="w")
         
-        # 右侧预览区域 (row=0, column=1)
         self.preview_frame = ttk.LabelFrame(self, text="视频布局预览", padding=(10, 10))
         self.preview_frame.grid(row=0, column=1, padx=(10, 10), pady=(10, 10), sticky="nsew")
         self.preview_frame.columnconfigure(0, weight=1)
         self.preview_frame.rowconfigure(0, weight=1)
 
-        # 添加一个按钮，显示生成视频
         self.生成视频按钮 = ttk.Button(self.生成设置Frame, text="生成视频", command=生成视频_1)
         self.生成视频按钮.pack(fill="x", padx=(10, 10), pady=(10, 10))
-
-
 
         # 创建预览组件（使用默认分辨率）
         self.create_preview(self.default_resolution)
@@ -404,10 +373,7 @@ class P1Frame(ttk.Frame):
         except Exception as e:
             # 如果获取分辨率失败，返回None
             print(f"获取视频 {video_path} 分辨率失败: {e}")
-            r视频的函数
-   
-
-
+            
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("预览")
