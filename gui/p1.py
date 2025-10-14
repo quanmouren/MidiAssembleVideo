@@ -8,6 +8,7 @@ sys.path.append('gui')
 sys.path.append('src')
 from parse_midi import parse_midi_notes
 from VideoRendering import VideoRendering
+from VideoRendering_1 import VideoRendering as VideoRendering_1
 from sounds_Inspection import runwebserver
 
 
@@ -128,7 +129,7 @@ class VideoPreviewGenerator:
 
 class P1Frame(ttk.Frame):
     def __init__(self, parent):
-        self.和弦方式 = ["","四角和弦"]
+        self.和弦方式 = ["","时间轴错位","四角和弦"]
         super().__init__(parent)
         self.选择文件 = ""
         self.音符片段文件夹 = ""
@@ -213,16 +214,34 @@ class P1Frame(ttk.Frame):
                     try:
                         VideoRendering(notes, 
                         video_dir=sounds_file_path, 
-                        sustained=0.4, 
+                        sustained=sustained, 
+
                         output_video_path="output_video.mp4",
-                        chord_size_ratio=0.44, 
-                        start_render_time=None,
-                        end_render_time=10)
+                        chord_size_ratio=chord_size_ratio, 
+                        start_render_time=start_render_time,
+                        end_render_time=end_render_time)
                     except Exception as e:
                         print("运行错误:", e)
                         runwebserver(midi_file_path, sounds_file_path)
 
                 thread = threading.Thread(target=run_video_rendering)
+                thread.start()
+            if self.选择和弦方式.get() == "时间轴错位":
+                def run_video_rendering1():
+                    try:
+                        VideoRendering_1(
+                        notes,
+                        video_dir=sounds_file_path,
+                        sustained=sustained,
+                        output_video_path="output_video.mp4",
+                        chord_time_offset=0.2,  # 和弦音符之间错开0.2秒
+                        start_render_time=start_render_time,
+                        end_render_time=end_render_time)
+                    except Exception as e:
+                        print("运行错误:", e)
+                        runwebserver(midi_file_path, sounds_file_path)
+
+                thread = threading.Thread(target=run_video_rendering1)
                 thread.start()
             
         def create_preview(self, resolution=None):
@@ -283,6 +302,7 @@ class P1Frame(ttk.Frame):
         self.延音时长_标签.grid(row=0, column=0, padx=5, pady=5, sticky="w")
         self.延音时长_输入框 = ttk.Entry(self.生成设置Tab1)
         self.延音时长_输入框.grid(row=0, column=1, padx=5, pady=5, sticky="w")
+        self.延音时长_输入框.insert(0, "0.3")  # 设置默认值
         
         self.和弦占比_标签 = ttk.Label(self.生成设置Tab1, text="和弦占比(0-1)：")
         self.和弦占比_标签.grid(row=1, column=0, padx=5, pady=5, sticky="w")
