@@ -16,8 +16,17 @@ class P2Frame(ttk.Frame):
         self.GUI()
 
     def GUI(self):
-        self.example_label = ttk.Label(self, text="这是预处理界面（p2）")
-        self.example_label.grid(row=0, column=0, padx=20, pady=20)
+        left_frame = ttk.Frame(self)
+        left_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="nsew")
+
+        self.Alpha版本测试Label = ttk.Label(left_frame, text="该页为音频分析Alpha版本，功能暂未完善")
+        self.Alpha版本测试Label.pack(fill="x", padx=(10, 10), pady=(10, 10))
+
+        self.音频分析Frame = ttk.LabelFrame(left_frame, text="音频分析Alpha", padding=(1, 1))
+        self.音频分析Frame.pack(fill="x", padx=(10, 10), pady=(10, 10))
+
+        
+        
 
 if __name__ == "__main__":
     root = tk.Tk()
