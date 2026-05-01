@@ -1,7 +1,7 @@
-pip install mido #MIT license - https://github.com/mido/mido
-pip install flask #BSD-3-Clause license - https://github.com/pallets/flask
-pip install -U flask-cors #MIT license - https://github.com/corydolphin/flask-cors
-pip install moviepy #MIT license - https://github.com/Zulko/moviepy
-pip install librosa #ISC license - https://github.com/librosa/librosa
-pip install soundfile #BSD-3-Clause license - https://github.com/bastibe/python-soundfile
-pip install sv-ttk #MIT license - https://github.com/rdbende/Sun-Valley-ttk-theme
+mido==1.3.3
+flask==3.0.0
+flask-cors==4.0.0
+moviepy==1.0.3
+librosa
+soundfile==0.13.1
+
